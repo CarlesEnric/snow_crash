@@ -199,6 +199,9 @@ Important: Explicar com ho has fet.
 ~$ cat /etc/passwd
 ~$ whoami
 ~$ find / -user flag00 2>/dev/null
+~$ find / -perm -4000 2>/dev/null
+~$ env
+~$ ps aux
 ```
 ##### Explicació del comandament:
 ```text
@@ -414,4 +417,4 @@ flag00@SnowCrash:~$ su level01
 Password: x24ti5gi3x0ol2eh4esiuxias
 level01@SnowCrash:~$ 
 ```
-### POSSIBLE PISTA LEVEL01 (cat /etc/passwd) -> (Observar la línia) flag01:42hDRfypTqqnw:3001:3001::/home/flag/flag01:/bin/bash
+### POSSIBLE PISTA LEVEL01 (cat /etc/passwd) -> (Observar la línia) flag01:42hDRfypTqqnw:3001:3001::/home/flag/flag01:/bin/bash 
