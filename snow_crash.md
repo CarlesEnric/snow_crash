@@ -549,3 +549,593 @@ flag01@SnowCrash:~$ getflag
 Check flag.Here is your token : f2av5il02puano7naaf6adaaf
 flag01@SnowCrash:~$ 
 ```
+---
+### LEVEL02
+#### He fet els següents comandaments:
+##### Connexió SSH al level02:
+```bash
+flag01@SnowCrash:~$ ssh level02@snowcrash -p 4242Could not create directory '/home/flag/flag01/.ssh'.
+The authenticity of host '[snowcrash]:4242 ([127.0.1.1]:4242)' can't be established.
+ECDSA key fingerprint is 6a:83:c6:2e:df:7a:c8:e0:1c:bc:d8:84:32:e0:84:ad.
+Are you sure you want to continue connecting (yes/no)? yes
+Failed to add the host to the list of known hosts (/home/flag/flag01/.ssh/known_hosts).
+           _____                      _____               _     
+          / ____|                    / ____|             | |    
+         | (___  _ __   _____      _| |     _ __ __ _ ___| |__  
+          \___ \| '_ \ / _ \ \ /\ / / |    | '__/ _` / __| '_ \ 
+level02@SnowCrash:~$ 
+```
+##### Llistar fitxers i directoris visibles i ocults:
+```bash
+level02@SnowCrash:~$ ls -la
+total 24
+dr-x------ 1 level02 level02  120 Mar  5  2016 .
+d--x--x--x 1 root    users    340 Aug 30  2015 ..
+-r-x------ 1 level02 level02  220 Apr  3  2012 .bash_logout
+-r-x------ 1 level02 level02 3518 Aug 30  2015 .bashrc
+-r-x------ 1 level02 level02  675 Apr  3  2012 .profile
+----r--r-- 1 flag02  level02 8302 Aug 30  2015 level02.pcap
+level02@SnowCrash:~$ 
+```
+##### Observem fitxer sospitós amb format ".pcap":
+```bash
+----r--r-- 1 flag02  level02 8302 Aug 30  2015 level02.pcap
+```
+```text
+.pcap -> Es tracta d'un format de captura de trànsit de xarxa (packet capture)
+```
+##### Observem per estar segurs de quin tipus d'arxiu es tracta:
+```bash
+level02@SnowCrash:~$ file level02.pcap
+level02.pcap: tcpdump capture file (little-endian) - version 2.4 (Ethernet, capture length 16777216)
+```
+###### Lectura amb el comandament "strings" que serveix per extreure text ASCII dins del binari:
+```bash
+level02@SnowCrash:~$ strings level02.pcap 
+@f&N.
+@f&N
+@f&N
+@f&N
+%@f&N
+@f&N
+%@f&NZ
+$@f&N
+$@f&N
+$@f&N)
+@f&N
+38400,38400
+SodaCan:0
+DISPLAY
+SodaCan:0
+xterm
+@f&N0
+!@f&N
+!@f&NF
+@f&N
+@f&N
+"@f&N
+"@f&N0
+@f&Nm-
+@f&N
+Linux 2.6.38-8-generic-pae (::ffff:10.1.1.2) (pts/10)
+wwwbugs login: @f&NV.
+Lf&N
+lLf&Nf
+lLf&N
+Lf&N`
+eLf&N
+eLf&N
+Lf&Ny
+vLf&N#
+vLf&N
+;&Lf&Nu
+;&eLf&N
+eLf&Ne
+;<Lf&N
+;<lLf&N
+lLf&N
+;NMf&N
+;NXMf&N
+XMf&N
+Nf&N
+Nf&N
+Nf&N
+<bNf&N
+Password: Nf&Nat
+<bVf&N
+<bfVf&ND
+Wf&N}
+tWf&N
+Wf&N
+ET_Wf&N
+YXf&N
+wXf&NP?
+Xf&N
+FdaXf&N
+Xf&N
+nXf&N?B
+Xf&N
+dXf&N
+Yf&N<T
+rYf&N
+Zf&Ne/
+Zf&N
+[f&N
+[f&N 
+[f&N
+[f&N
+\f&N
+N\f&N\
+\f&N
+JTD\f&N,
+/^f&N
+R^f&NQ
+_f&N
+L,e_f&N<
+[`f&N\9
+Mtl`f&N
+`f&N
+`f&N
+`f&N
+N}L`f&N
+af&N
+0af&N
+af&N
+Laf&N
+af&Nq
+af&N
+Jaf&N
+af&N~
+df&N
+df&N
+R}df&N8%
+Login incorrect
+wwwbugs login: df&N
+R}jf&N
+R}jf&N
+jf&N
+```
+##### Passem l'arxiu al host per poder analitzar-l'ho de manera més acurada amb les eïnes que ens poguem descarregar:
+```bash
+level02@SnowCrash:~$ cat level02.pcap | ssh hostUser@192.168.1.19 "cat > /home/hostUser/Documents/42outerCore/snow_crash/snow_crash/level02/resources/packetCapture.pcap"
+Could not create directory '/home/user/level02/.ssh'.
+The authenticity of host '192.168.1.19 (192.168.1.19)' can't be established.
+ECDSA key fingerprint is e2:f0:85:bc:8c:d1:aa:83:cc:f7:be:05:84:4b:b0:ae.
+Are you sure you want to continue connecting (yes/no)? yes
+Failed to add the host to the list of known hosts (/home/user/level02/.ssh/known_hosts).
+hostUser@192.168.1.19's password: myHostPassword
+```
+##### Resultat no gaire clar amb comandament "strings", provarem amb el programa tcpdump:
+```bash
+tcpdump -r level02.pcap -A # -r(read) / -A(sortida amb text)
+```
+###### Lectura amb cru:
+```bash
+cat packetCapture.pcap 
+�ò�@f&N.J'̊$E<��@@J>;���;��ߙO/Y�▒�����
+f&N�JJ$E<@@�/;���;���/Y�O���A�▒ 8����
+�.�f&N�B'̊$E4��@@JE;���;��ߙO/Y�▒º��B�sp
+f&N֡EE$E7ԣ@@�;���;���/Y�O���B�▒▒��
+                                 
+�.�f&N͢B'̊$E4��@@JD;���;��ߙO/Y�▒º��E�s`
+f&N��E'̊$E7��@@J@;���;��ߙO/Y�▒º��E�▒s�W
+f&NZ�BB$E4Ԥ@@�;���;���/Y�O���E�▒ŀ�
+                                  
+�.�f&N�TT$EFԥ@@�;���;���/Y�O���E�▒ŀ▒ŧ�
+�.�▒�� ��#��'��$@f&N��T'̊$EF��@@J0;���;��ߙO/Y�▒ź��W�▒s��
+▒�� ��#��'��$@f&N)�ZZ$ELԦ@@y;���;���/Y�O���W�▒׀▒ō
+�.�▒��@f&Nݥ�'̊$Ew��@@I�;���;��ߙO/Y�▒׺��o�▒s��
+8400,38400����#SodaCan:0����'DISPLAYSodaCan:0����▒xterm��@f&N0�TT$EFԧ@@~;���;���/Y�O���o�▒▒�▒��9
+�.�f&N��'̊$E~��@@I�;���;��ߙO/Y�▒▒�����▒sES
+b       B▒
+
+�����������1������!@f&NF�II$E;Ԩ@@�;���;���/Y�O�����▒d�▒��#
+�.�f&NаI'̊$E;��@@J8;���;��ߙO/Y�▒d�����▒s�n
+f&N��QQ$ECԩ@@;���;���/Y�O�����▒k�▒��
+�.�f&N��K'̊$E=��@@J5;���;��ߙO/Y�▒k�����▒s�W
+f&N0�kk$E]Ԫ@@d;���;���/Y�O�����▒t�▒�[a
+�.�     ▒
+�
+ �����������@f&Nm-B'̊$E4��@@J=;���;��ߙO/Y�▒t�����s.
+f&N�-��$Eԫ@@A;���;���/Y�O�����▒t�▒�K�
+�.�
+inux 2.6.38-8-generic-pae (::ffff:10.1.1.2) (pts/10)
+
+wwwbugs login: @f&NV.B'̊$E4��@@J<;���;��ߙO/Y�▒t���
+�s�
+f&N�C'̊$E5��@@J:;���;��ߙO/Y�▒t���
+                                �▒s�
+Lf&Nf�DD$E6Ԭ@@�;���;���/Y�O���
+                              �▒u�▒��r
+�s�8f&N�B'̊$E4��@@J:;���;��ߙO/Y�▒u���
+�▒s�%`  C'̊$E5��@@J8;���;��ߙO/Y�▒u���
+�eLf&N
+�▒v�▒��SDD$E6ԭ@@�;���;���/Y�O���
+```
+###### Lectura amb tcpdump:
+```bash
+cetf@7F:~/Documents/42outerCore/snow_crash/snow_crash/level02/resources$ tcpdump -r packetCapture.pcap -A
+reading from file packetCapture.pcap, link-type EN10MB (Ethernet), snapshot length 16777216
+07:23:12.267566 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [S], seq 2635601089, win 14600, options [mss 1460,sackOK,TS val 18592800 ecr 0,nop,wscale 7], length 0
+E..<..@.@.J>;...;....O/Y..........9............
+... ........
+07:23:12.267694 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [S.], seq 3131636289, ack 2635601090, win 14480, options [mss 1460,sackOK,TS val 46280417 ecr 18592800,nop,wscale 5], length 0
+E..<..@.@../;...;.../Y.O...A......8............
+....... ....
+07:23:12.267956 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [.], ack 1, win 115, options [nop,nop,TS val 18592800 ecr 46280417], length 0
+E..4..@.@.JE;...;....O/Y.......B...s.p.....
+... ....
+07:23:12.303574 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [P.], seq 1:4, ack 1, win 453, options [nop,nop,TS val 46280426 ecr 18592800], length 3
+E..7..@.@...;...;.../Y.O...B...............
+....... ..%
+07:23:12.303821 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [.], ack 4, win 115, options [nop,nop,TS val 18592804 ecr 46280426], length 0
+E..4..@.@.JD;...;....O/Y.......E...s.`.....
+...$....
+07:23:12.303842 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 1:4, ack 4, win 115, options [nop,nop,TS val 18592804 ecr 46280426], length 3
+E..7..@.@.J@;...;....O/Y.......E...s.W.....
+...$......%
+07:23:12.303962 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [.], ack 4, win 453, options [nop,nop,TS val 46280426 ecr 18592804], length 0
+E..4..@.@...;...;.../Y.O...E...............
+.......$
+07:23:12.304147 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [P.], seq 4:22, ack 4, win 453, options [nop,nop,TS val 46280426 ecr 18592804], length 18
+E..F..@.@...;...;.../Y.O...E...............
+.......$..&..... ..#..'..$
+07:23:12.304264 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 4:22, ack 22, win 115, options [nop,nop,TS val 18592804 ecr 46280426], length 18
+E..F..@.@.J0;...;....O/Y.......W...s.......
+...$......&..... ..#..'..$
+07:23:12.304425 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [P.], seq 22:46, ack 22, win 453, options [nop,nop,TS val 46280426 ecr 18592804], length 24
+E..L..@.@..y;...;.../Y.O...W...............
+.......$.. .....#.....'.........
+07:23:12.304605 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 22:89, ack 46, win 115, options [nop,nop,TS val 18592804 ecr 46280426], length 67
+E..w..@.@.I.;...;....O/Y.......o...s.......
+...$...... .38400,38400....#.SodaCan:0....'..DISPLAY.SodaCan:0......xterm..
+07:23:12.306736 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [P.], seq 46:64, ack 89, win 453, options [nop,nop,TS val 46280427 ecr 18592804], length 18
+E..F..@.@..~;...;.../Y.O...o.........9.....
+.......$........"........!
+07:23:12.306958 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 89:163, ack 64, win 115, options [nop,nop,TS val 18592804 ecr 46280427], length 74
+E..~..@.@.I.;...;....O/Y...........sES.....
+...$............"..".....b........b.... B.
+..............................1.......!
+07:23:12.307270 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [P.], seq 64:71, ack 163, win 453, options [nop,nop,TS val 46280427 ecr 18592804], length 7
+E..;..@.@...;...;.../Y.O.......d.....#.....
+.......$.."....
+07:23:12.307408 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 163:170, ack 71, win 115, options [nop,nop,TS val 18592804 ecr 46280427], length 7
+E..;..@.@.J8;...;....O/Y...d.......s.n.....
+...$......"....
+07:23:12.307704 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [P.], seq 71:86, ack 170, win 453, options [nop,nop,TS val 46280427 ecr 18592804], length 15
+E..C..@.@...;...;.../Y.O.......k...........
+.......$..!..........."
+07:23:12.307843 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 170:179, ack 86, win 115, options [nop,nop,TS val 18592804 ecr 46280427], length 9
+E..=..@.@.J5;...;....O/Y...k.......s.W.....
+...$............"
+07:23:12.308016 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [P.], seq 86:127, ack 179, win 453, options [nop,nop,TS val 46280427 ecr 18592804], length 41
+E..]..@.@..d;...;.../Y.O.......t....[a.....
+.......$..".............        ..
+.....................
+07:23:12.339309 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [.], ack 127, win 115, options [nop,nop,TS val 18592808 ecr 46280427], length 0
+E..4..@.@.J=;...;....O/Y...t.......s.......
+...(....
+07:23:12.339391 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [P.], seq 127:202, ack 179, win 453, options [nop,nop,TS val 46280435 ecr 18592808], length 75
+E.....@.@..A;...;.../Y.O.......t....K......
+.......(
+Linux 2.6.38-8-generic-pae (::ffff:10.1.1.2) (pts/10)
+
+..wwwbugs login: 
+07:23:12.339542 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [.], ack 202, win 115, options [nop,nop,TS val 18592808 ecr 46280435], length 0
+E..4..@.@.J<;...;....O/Y...t.......s.......
+...(....
+07:23:24.491452 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 179:180, ack 202, win 115, options [nop,nop,TS val 18594023 ecr 46280435], length 1
+E..5..@.@.J:;...;....O/Y...t.......s.......
+........l
+07:23:24.496998 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [P.], seq 202:204, ack 180, win 453, options [nop,nop,TS val 46283475 ecr 18594023], length 2
+E..6..@.@...;...;.../Y.O.......u.....r.....
+..:......l
+07:23:24.497158 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [.], ack 204, win 115, options [nop,nop,TS val 18594023 ecr 46283475], length 0
+E..4..@.@.J:;...;....O/Y...u.......s.8.....
+......:.
+07:23:24.591456 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 180:181, ack 204, win 115, options [nop,nop,TS val 18594033 ecr 46283475], length 1
+E..5..@.@.J8;...;....O/Y...u.......s.%.....
+......:.e
+07:23:24.597002 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [P.], seq 204:206, ack 181, win 453, options [nop,nop,TS val 46283500 ecr 18594033], length 2
+E..6..@.@...;...;.../Y.O.......v.....S.....
+..:......e
+07:23:24.597220 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [.], ack 206, win 115, options [nop,nop,TS val 18594033 ecr 46283500], length 0
+E..4..@.@.J8;...;....O/Y...v.......s.......
+......:.
+07:23:24.821113 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 181:182, ack 206, win 115, options [nop,nop,TS val 18594056 ecr 46283500], length 1
+E..5..@.@.J6;...;....O/Y...v.......s.......
+......:.v
+07:23:24.828963 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [P.], seq 206:208, ack 182, win 453, options [nop,nop,TS val 46283558 ecr 18594056], length 2
+E..6..@.@...;...;.../Y.O.......w...........
+..;&.....v
+07:23:24.829099 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [.], ack 208, win 115, options [nop,nop,TS val 18594056 ecr 46283558], length 0
+E..4..@.@.J6;...;....O/Y...w.......s.......
+......;&
+07:23:24.911733 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 182:183, ack 208, win 115, options [nop,nop,TS val 18594065 ecr 46283558], length 1
+E..5..@.@.J4;...;....O/Y...w.......s.......
+......;&e
+07:23:24.916960 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [P.], seq 208:210, ack 183, win 453, options [nop,nop,TS val 46283580 ecr 18594065], length 2
+E..6..@.@...;...;.../Y.O.......x...........
+..;<.....e
+07:23:24.917093 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [.], ack 210, win 115, options [nop,nop,TS val 18594065 ecr 46283580], length 0
+E..4..@.@.J4;...;....O/Y...x.......s.......
+......;<
+07:23:24.981645 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 183:184, ack 210, win 115, options [nop,nop,TS val 18594072 ecr 46283580], length 1
+E..5..@.@.J2;...;....O/Y...x.......s.......
+......;<l
+07:23:24.988957 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [P.], seq 210:212, ack 184, win 453, options [nop,nop,TS val 46283598 ecr 18594072], length 2
+E..6..@.@...;...;.../Y.O.......y...........
+..;N.....l
+07:23:24.989096 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [.], ack 212, win 115, options [nop,nop,TS val 18594072 ecr 46283598], length 0
+E..4..@.@.J2;...;....O/Y...y.......s.......
+......;N
+07:23:25.311494 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 184:185, ack 212, win 115, options [nop,nop,TS val 18594105 ecr 46283598], length 1
+E..5..@.@.J0;...;....O/Y...y.......s.V.....
+...9..;NX
+07:23:25.317086 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [P.], seq 212:214, ack 185, win 453, options [nop,nop,TS val 46283680 ecr 18594105], length 2
+E..6..@.@...;...;.../Y.O.......z.....X.....
+..;....9.X
+07:23:25.317328 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [.], ack 214, win 115, options [nop,nop,TS val 18594105 ecr 46283680], length 0
+E..4..@.@.J0;...;....O/Y...z.......s.
+.....
+...9..;.
+07:23:26.091422 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 185:186, ack 214, win 115, options [nop,nop,TS val 18594183 ecr 46283680], length 1
+E..5..@.@.J.;...;....O/Y...z.......s.......
+......;.
+07:23:26.094869 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [P.], seq 214:215, ack 186, win 453, options [nop,nop,TS val 46283874 ecr 18594183], length 1
+E..5..@.@...;...;.../Y.O.......{...........
+..<b.....
+07:23:26.095123 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [.], ack 215, win 115, options [nop,nop,TS val 18594183 ecr 46283874], length 0
+E..4..@.@.J.;...;....O/Y...{.......s.......
+......<b
+07:23:26.095219 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [P.], seq 215:228, ack 186, win 453, options [nop,nop,TS val 46283874 ecr 18594183], length 13
+E..A..@.@..w;...;.../Y.O.......{....'......
+..<b.....
+Password: 
+07:23:26.095329 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [.], ack 228, win 115, options [nop,nop,TS val 18594183 ecr 46283874], length 0
+E..4..@.@.J-;...;....O/Y...{...%...s.......
+......<b
+07:23:34.363418 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 186:187, ack 228, win 115, options [nop,nop,TS val 18595010 ecr 46283874], length 1
+E..5..@.@.J+;...;....O/Y...{...%...s.......
+......<bf
+07:23:34.400964 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [.], ack 187, win 453, options [nop,nop,TS val 46285951 ecr 18595010], length 0
+E..4..@.@...;...;.../Y.O...%...|.....@.....
+..D.....
+07:23:35.253053 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 187:188, ack 228, win 115, options [nop,nop,TS val 18595099 ecr 46285951], length 1
+E..5..@.@.J*;...;....O/Y...|...%...s|0.....
+......D.t
+07:23:35.253134 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [.], ack 188, win 453, options [nop,nop,TS val 46286164 ecr 18595099], length 0
+E..4..@.@...;...;.../Y.O...%...}...........
+..ET....
+07:23:35.873401 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 188:189, ack 228, win 115, options [nop,nop,TS val 18595161 ecr 46286164], length 1
+E..5..@.@.J);...;....O/Y...}...%...s.......
+...Y..ET_
+07:23:35.873472 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [.], ack 189, win 453, options [nop,nop,TS val 46286319 ecr 18595161], length 0
+E..4..@.@...;...;.../Y.O...%...~.....7.....
+..E....Y
+07:23:36.343811 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 189:190, ack 228, win 115, options [nop,nop,TS val 18595208 ecr 46286319], length 1
+E..5..@.@.J(;...;....O/Y...~...%...swQ.....
+......E.w
+07:23:36.343888 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [.], ack 190, win 453, options [nop,nop,TS val 46286436 ecr 18595208], length 0
+E..4..@.@...;...;.../Y.O...%...............
+..Fd....
+07:23:36.573585 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 190:191, ack 228, win 115, options [nop,nop,TS val 18595231 ecr 46286436], length 1
+E..5..@.@.J';...;....O/Y.......%...s.......
+......Fda
+07:23:36.573646 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [.], ack 191, win 453, options [nop,nop,TS val 46286494 ecr 18595231], length 0
+E..4..@.@...;...;.../Y.O...%.........@.....
+..F.....
+07:23:36.803330 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 191:192, ack 228, win 115, options [nop,nop,TS val 18595254 ecr 46286494], length 1
+E..5..@.@.J&;...;....O/Y.......%...s.r.....
+......F.n
+07:23:36.803391 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [.], ack 192, win 453, options [nop,nop,TS val 46286551 ecr 18595254], length 0
+E..4..@.@..~;...;.../Y.O...%...............
+..F.....
+07:23:36.943261 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 192:193, ack 228, win 115, options [nop,nop,TS val 18595268 ecr 46286551], length 1
+E..5..@.@.J%;...;....O/Y.......%...s.*.....
+......F.d
+07:23:36.943318 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [.], ack 193, win 453, options [nop,nop,TS val 46286586 ecr 18595268], length 0
+E..4..@.@..};...;.../Y.O...%...............
+..F.....
+07:23:37.283708 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 193:194, ack 228, win 115, options [nop,nop,TS val 18595302 ecr 46286586], length 1
+E..5..@.@.J$;...;....O/Y.......%...sz......
+......F.r
+07:23:37.283783 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [.], ack 194, win 453, options [nop,nop,TS val 46286671 ecr 18595302], length 0
+E..4..@.@..|;...;.../Y.O...%.........E.....
+..GO....
+07:23:38.864101 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 194:195, ack 228, win 115, options [nop,nop,TS val 18595460 ecr 46286671], length 1
+E..5..@.@.J#;...;....O/Y.......%...sl......
+......GO.
+07:23:38.864181 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [.], ack 195, win 453, options [nop,nop,TS val 46287066 ecr 18595460], length 0
+E..4..@.@..{;...;.../Y.O...%...............
+..H.....
+07:23:39.233935 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 195:196, ack 228, win 115, options [nop,nop,TS val 18595497 ecr 46287066], length 1
+E..5..@.@.J";...;....O/Y.......%...sk?.....
+......H..
+07:23:39.234016 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [.], ack 196, win 453, options [nop,nop,TS val 46287159 ecr 18595497], length 0
+E..4..@.@..z;...;.../Y.O...%...............
+..I7....
+07:23:39.604364 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 196:197, ack 228, win 115, options [nop,nop,TS val 18595534 ecr 46287159], length 1
+E..5..@.@.J!;...;....O/Y.......%...sj......
+......I7.
+07:23:39.604414 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [.], ack 197, win 453, options [nop,nop,TS val 46287251 ecr 18595534], length 0
+E..4..@.@..y;...;.../Y.O...%...............
+..I.....
+07:23:40.374542 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 197:198, ack 228, win 115, options [nop,nop,TS val 18595611 ecr 46287251], length 1
+E..5..@.@.J ;...;....O/Y.......%...s.......
+......I.N
+07:23:40.374620 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [.], ack 198, win 453, options [nop,nop,TS val 46287444 ecr 18595611], length 0
+E..4..@.@..x;...;.../Y.O...%...............
+..JT....
+07:23:40.574439 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 198:199, ack 228, win 115, options [nop,nop,TS val 18595631 ecr 46287444], length 1
+E..5..@.@.J.;...;....O/Y.......%...s.<.....
+.../..JTD
+07:23:40.574508 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [.], ack 199, win 453, options [nop,nop,TS val 46287494 ecr 18595631], length 0
+E..4..@.@..w;...;.../Y.O...%...............
+..J..../
+07:23:42.264451 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 199:200, ack 228, win 115, options [nop,nop,TS val 18595800 ecr 46287494], length 1
+E..5..@.@.J.;...;....O/Y.......%...s.`.....
+......J.R
+07:23:42.264529 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [.], ack 200, win 453, options [nop,nop,TS val 46287916 ecr 18595800], length 0
+E..4..@.@..v;...;.../Y.O...%.........p.....
+..L,....
+07:23:43.574954 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 200:201, ack 228, win 115, options [nop,nop,TS val 18595931 ecr 46287916], length 1
+E..5.   @.@.J.;...;....O/Y.......%...s.6.....
+...[..L,e
+07:23:43.575036 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [.], ack 201, win 453, options [nop,nop,TS val 46288244 ecr 18595931], length 0
+E..4..@.@..u;...;.../Y.O...%...............
+..Mt...[
+07:23:44.014684 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 201:202, ack 228, win 115, options [nop,nop,TS val 18595975 ecr 46288244], length 1
+E..5.
+@.@.J.;...;....O/Y.......%...sw......
+......Mtl
+07:23:44.014742 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [.], ack 202, win 453, options [nop,nop,TS val 46288354 ecr 18595975], length 0
+E..4..@.@..t;...;.../Y.O...%.........   .....
+..M.....
+07:23:44.635281 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 202:203, ack 228, win 115, options [nop,nop,TS val 18596037 ecr 46288354], length 1
+E..5..@.@.J.;...;....O/Y.......%...sd......
+......M..
+07:23:44.635364 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [.], ack 203, win 453, options [nop,nop,TS val 46288509 ecr 18596037], length 0
+E..4..@.@..s;...;.../Y.O...%........./.....
+..N}....
+07:23:44.805020 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 203:204, ack 228, win 115, options [nop,nop,TS val 18596054 ecr 46288509], length 1
+E..5..@.@.J.;...;....O/Y.......%...s.g.....
+......N}L
+07:23:44.805072 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [.], ack 204, win 453, options [nop,nop,TS val 46288552 ecr 18596054], length 0
+E..4..@.@..r;...;.../Y.O...%...............
+..N.....
+07:23:45.074939 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 204:205, ack 228, win 115, options [nop,nop,TS val 18596081 ecr 46288552], length 1
+E..5..@.@.J.;...;....O/Y.......%...s. .....
+......N.0
+07:23:45.074992 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [.], ack 205, win 453, options [nop,nop,TS val 46288619 ecr 18596081], length 0
+E..4..@.@..q;...;.../Y.O...%...............
+..N.....
+07:23:45.104894 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 205:206, ack 228, win 115, options [nop,nop,TS val 18596084 ecr 46288619], length 1
+E..5..@.@.J.;...;....O/Y.......%...s.......
+......N.L
+07:23:45.104948 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [.], ack 206, win 453, options [nop,nop,TS val 46288626 ecr 18596084], length 0
+E..4..@.@..p;...;.../Y.O...%...............
+..N.....
+07:23:45.965233 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [P.], seq 206:207, ack 228, win 115, options [nop,nop,TS val 18596170 ecr 46288626], length 1
+E..5..@.@.J.;...;....O/Y.......%...s.{.....
+...J..N.
+07:23:45.965310 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [.], ack 207, win 453, options [nop,nop,TS val 46288842 ecr 18596170], length 0
+E..4..@.@..o;...;.../Y.O...%.........Y.....
+..O....J
+07:23:45.972986 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [P.], seq 228:231, ack 207, win 453, options [nop,nop,TS val 46288844 ecr 18596170], length 3
+E..7..@.@..k;...;.../Y.O...%.........?.....
+..O....J.
+
+07:23:45.973182 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [.], ack 231, win 115, options [nop,nop,TS val 18596170 ecr 46288844], length 0
+E..4..@.@.J.;...;....O/Y.......(...s.......
+...J..O.
+07:23:48.730070 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [P.], seq 231:232, ack 207, win 453, options [nop,nop,TS val 46289533 ecr 18596170], length 1
+E..5..@.@..l;...;.../Y.O...(...............
+..R}...J.
+07:23:48.730327 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [.], ack 232, win 115, options [nop,nop,TS val 18596446 ecr 46289533], length 0
+E..4..@.@.J.;...;....O/Y.......)...s.......
+...^..R}
+07:23:48.730424 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [P.], seq 232:267, ack 207, win 453, options [nop,nop,TS val 46289533 ecr 18596446], length 35
+E..W..@.@..I;...;.../Y.O...)...............
+..R}...^.
+Login incorrect
+wwwbugs login: 
+07:23:48.730579 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [.], ack 267, win 115, options [nop,nop,TS val 18596446 ecr 46289533], length 0
+E..4..@.@.J.;...;....O/Y.......L...s.......
+...^..R}
+07:23:54.377030 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [F.], seq 207, ack 267, win 115, options [nop,nop,TS val 18597011 ecr 46289533], length 0
+E..4..@.@.J.;...;....O/Y.......L...s.......
+......R}
+07:23:54.377594 IP 59.233.235.223.12121 > 59.233.235.218.39247: Flags [F.], seq 267, ack 208, win 453, options [nop,nop,TS val 46290945 ecr 18597011], length 0
+E..4..@.@..k;...;.../Y.O...L...............
+..X.....
+07:23:54.377802 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [.], ack 268, win 115, options [nop,nop,TS val 18597011 ecr 46290945], length 0
+E..4..@.@.J.;...;....O/Y.......M...s.......
+```
+##### Descobrir agulla en el paller:
+###### Analitzem una línia:
+```bash
+07:23:12.267566 IP 59.233.235.218.39247 > 59.233.235.223.12121: Flags [S], seq 2635601089, win 14600, options [...], length 0
+```
+###### Desglossat:
+```text
+*Segment*	                *Significat*
+07:23:12.267566	            timestamp
+IP	                        protocol
+59.233.235.218.39247	    IP origen + port
+>	                        direcció
+59.233.235.223.12121	    IP destí + port
+Flags [S]	                tipus paquet TCP
+seq ...	                    número de seqüència
+win ...	                    finestra TCP
+length 0	                bytes de dades
+```
+###### Els Flags TCP (handschacke):
+```text
+*Flag*      *Nom*	    *Significat*
+[S]	        SYN	        client inicia connexió
+[S.]	    SYN-ACK	    resposta servidor
+[.]	        ACK	        confirmació del client
+[P.]	    PUSH	    dades reals
+[F.]	    FIN	        tancar connexió
+```
+###### No s'acaba de veure clar les lectura amb tcpdump, farem servir wireshark
+```bash
+sudo apt install wireshark
+sudo usermod -aG wireshark $USER
+wireshark
+```
+```text
+Un cop obert el programa Wireshark
+Open file .pcap que hem guardat en el host -> (packetCapture.pcap)
+En la barra/camp filter escrivim "tcp" o "tcp 12121" -> 12121 port servidor(fixa) i 39247 és port client(random canvia)
+Fem clic dret sobre alguna de les línies tcp i premem "Follow" seguit de "TCP Stream" o directament amb el shortcut (Ctrl+Alt+Maj+T)
+S'obra una finestra amb el resultat següent on podrem veure pràcticament la contrasenya:
+
+..%..%..&..... ..#..'..$..&..... ..#..'..$.. .....#.....'........... .38400,38400....#.SodaCan:0....'..DISPLAY.SodaCan:0......xterm.........."........!........"..".....b........b....	B.
+..............................1.......!.."......"......!..........."........"..".............	..
+.....................
+Linux 2.6.38-8-generic-pae (::ffff:10.1.1.2) (pts/10)
+
+..wwwbugs login: l.le.ev.ve.el.lX.X
+..
+Password: ft_wandr...NDRel.L0L
+.
+..
+Login incorrect
+wwwbugs login: 
+```
+###### Eus aquí un gran descobriment:
+```text
+El password és ft_wandr...NDRel.L0L, però esborrem els caràcters que precedeixen '.': => ft_waNDReL0L. Doncs els punts representen el codi 0x7f o DEL els non-printable "delete". Eliminant el caràcter immediatatament anterior (backspace)
+```
+##### Provem a veure si és el password de la flag
+```bash
+level02@SnowCrash:~$ su flag02
+Password: ft_waNDReL0L
+Don't forget to launch getflag !
+flag02@SnowCrash:~$ getflag
+Check flag.Here is your token : kooda2puivaav1idi4f57q8iq
+flag02@SnowCrash:~$ 
+```
+### LEVEL03
+#### Connexió al level03
+```bash
+flag02@SnowCrash:~$ ssh level03@snowcrash -p 4242Could not create directory '/home/flag/flag02/.ssh'.
+The authenticity of host '[snowcrash]:4242 ([127.0.1.1]:4242)' can't be established.
+ECDSA key fingerprint is 6a:83:c6:2e:df:7a:c8:e0:1c:bc:d8:84:32:e0:84:ad.
+Are you sure you want to continue connecting (yes/no)? yes
+Failed to add the host to the list of known hosts (/home/flag/flag02/.ssh/known_hosts).
+           _____                      _____               _     
+          / ____|                    / ____|             | |    
+         | (___  _ __   _____      _| |     _ __ __ _ ___| |__  
+          \___ \| '_ \ / _ \ \ /\ / / |    | '__/ _` / __| '_ \ 
+          ____) | | | | (_) \ V  V /| |____| | | (_| \__ \ | | |
+         |_____/|_| |_|\___/ \_/\_/  \_____|_|  \__,_|___/_| |_|
+                                                        
+  Good luck & Have fun
+
+          
+level03@snowcrash's password: kooda2puivaav1idi4f57q8iq
+level03@SnowCrash:~$ 
+```
